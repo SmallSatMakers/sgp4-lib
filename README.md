@@ -1,6 +1,6 @@
 # SGP4 Library
 
-[![Build Status](https://travis-ci.org/smallsatmakers/sgp4-lib.svg?branch=master)](https://travis-ci.org/smallsatmakers/sgp4-lib)
+[![Build Status](https://travis-ci.org/SmallSatMakers/sgp4-lib.svg?branch=master)](https://travis-ci.org/SmallSatMakers/sgp4-lib)
 
 SGP4 orbit propagator library forked from https://github.com/dnwrnr/sgp4.
 Includes support for multi-object vectors, reading TLE files from disk and updating TLE information from text file URL.
