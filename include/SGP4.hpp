@@ -44,6 +44,15 @@ namespace LSGP4
         }
 
         void SetTle(const Tle &tle);
+        /**
+         * @brief Get the TLE for this SGP4 model
+         * 
+         * @return const Tle& 
+         */
+        const Tle& GetTle() const
+        {
+            return tle_;
+        }
         Eci FindPosition(double tsince) const;
         Eci FindPosition(const DateTime &date) const;
 
