@@ -1,6 +1,3 @@
-CC = gcc
-CXX = g++
-
 EDCFLAGS:= -O2 -std=gnu11 -I include/ -Wall $(CFLAGS)
 EDCXXFLAGS:= -O2 -std=c++11 -Wall -I include/ $(CXXFLAGS)
 EDLDFLAGS:= -lpthread -lm $(LDFLAGS)
