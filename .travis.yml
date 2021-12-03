@@ -80,11 +80,6 @@ install:
     - ${CXX} --version
     # Travis machines have 2 cores
     - JOBS=2
-before_script:
-    # have CMake generate build files
-    - cd "${TRAVIS_BUILD_DIR}"
-    - mkdir build && cd build
-    - cmake ..
 script:
     # build
-    - cmake --build . -- -j${JOBS}
+    - make -j${JOBS}

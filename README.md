@@ -1,10 +1,26 @@
-SGP4 library
-============
+# SGP4 Library
 
-[![Build Status](https://travis-ci.org/dnwrnr/sgp4.svg?branch=master)](https://travis-ci.org/dnwrnr/sgp4)
+[![Build Status](https://travis-ci.org/smallsatmakers/sgp4-lib.svg?branch=master)](https://travis-ci.org/smallsatmakers/sgp4-lib)
 
-License
--------
+SGP4 orbit propagator library forked from https://github.com/dnwrnr/sgp4.
+Includes support for multi-object vectors, reading TLE files from disk and updating TLE information from text file URL.
+
+## Building
+```
+   $ make -j$(NPROC)
+```
+
+## Test
+Test programs are provided for runtime testing, pass prediction and object tracking in `examples` directory. Build process creates `.out` binaries in this directory.
+
+## Linking with your own program
+The build process creates a static library `libsgp4.a`, that can be linked against a custom program.
+e.g.
+```
+   $ g++ -O2 -std=c++11 -Wall -I /path/to/sgp4-lib/include example.cpp -o example.out /path/to/sgp4-lib/libsgp4.a -lm
+```
+The included `Makefile` can be used as a reference if needed.
+#### License
 
     Copyright 2017 Daniel Warner
 
