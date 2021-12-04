@@ -21,6 +21,7 @@
 #include "Util.hpp"
 #include "DateTime.hpp"
 #include "TleException.hpp"
+#include "meb_print.h"
 
 namespace LSGP4
 {
@@ -32,7 +33,7 @@ namespace LSGP4
     class Tle
     {
     public:
-        Tle()
+        Tle(): initd(false)
         {
 
         }
@@ -43,7 +44,7 @@ namespace LSGP4
      */
         Tle(const std::string &line_one,
             const std::string &line_two)
-            : line_one_(line_one), line_two_(line_two)
+            : line_one_(line_one), line_two_(line_two), initd(false)
         {
             Initialize();
         }
@@ -57,7 +58,7 @@ namespace LSGP4
         Tle(const std::string &name,
             const std::string &line_one,
             const std::string &line_two)
-            : name_(name), line_one_(line_one), line_two_(line_two)
+            : name_(name), line_one_(line_one), line_two_(line_two), initd(false)
         {
             Initialize();
         }
@@ -85,6 +86,7 @@ namespace LSGP4
             mean_anomaly_ = tle.mean_anomaly_;
             mean_motion_ = tle.mean_motion_;
             orbit_number_ = tle.orbit_number_;
+            initd = tle.initd;
         }
 
         /**
@@ -373,7 +375,7 @@ namespace LSGP4
         static const unsigned int TLE_LEN_LINE_DATA = 69;
         static const unsigned int TLE_LEN_LINE_NAME = 22;
 
-        bool initd = false;
+        bool initd;
     };
 };
 inline std::ostream &operator<<(std::ostream &strm, const LSGP4::Tle &t)

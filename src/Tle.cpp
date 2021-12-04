@@ -484,10 +484,8 @@ std::vector<LSGP4::Tle> ReadTleFromFile(const char *fname)
         }
         strncpy(l1, buf, 69); // L1 is found, read it in
         l1[69] = '\0';
-        dbprintlf(BLUE_FG "Obj %d, L1: %s", n_obj, l1);
         // 2. Read line 2
         res = fgets(buf, sizeof(buf), fp);
-        dbprintf(RED_FG "%s", buf);
         buf[strcspn(buf, "\n")] = '\0';
         if (strlen(buf) != 69) // L2?
             continue;
@@ -498,8 +496,7 @@ std::vector<LSGP4::Tle> ReadTleFromFile(const char *fname)
         }
         strncpy(l2, buf, 69); // L2 is found, read it in
         l2[69] = '\0';
-        dbprintlf(BLUE_FG "Obj %d, L2: %s", n_obj, l2);
-        objs[m_obj].Update(l1, l2);
+        objs.at(n_obj).Update(l1, l2);
         n_obj++;
     } while (res != NULL);
     fclose(fp);
