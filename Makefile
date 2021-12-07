@@ -25,6 +25,7 @@ test: $(LIBTARGET)
 	$(CXX) $(EDCXXFLAGS) examples/passpredict.cpp $(LIBTARGET) -o examples/passpredict.out $(EDLDFLAGS)
 	$(CXX) $(EDCXXFLAGS) examples/runtest.cpp $(LIBTARGET) -o examples/runtest.out $(EDLDFLAGS)
 	$(CXX) $(EDCXXFLAGS) examples/sattrack.cpp $(LIBTARGET) -o examples/sattrack.out $(EDLDFLAGS)
+	$(CXX) $(EDCXXFLAGS) examples/obtaintle.cpp $(LIBTARGET) -o examples/obtaintle.out $(EDLDFLAGS)
 
 -include $(CDEPS)
 

@@ -38,10 +38,10 @@ namespace LSGP4
 
         }
         /**
-     * @details Initialise given the two lines of a tle
-     * @param[in] line_one Tle line one
-     * @param[in] line_two Tle line two
-     */
+         * @details Initialise given the two lines of a tle
+         * @param[in] line_one Tle line one
+         * @param[in] line_two Tle line two
+         */
         Tle(const std::string &line_one,
             const std::string &line_two)
             : line_one_(line_one), line_two_(line_two), initd(false)
@@ -50,11 +50,11 @@ namespace LSGP4
         }
 
         /**
-     * @details Initialise given the satellite name and the two lines of a tle
-     * @param[in] name Satellite name
-     * @param[in] line_one Tle line one
-     * @param[in] line_two Tle line two
-     */
+         * @details Initialise given the satellite name and the two lines of a tle
+         * @param[in] name Satellite name
+         * @param[in] line_one Tle line one
+         * @param[in] line_two Tle line two
+         */
         Tle(const std::string &name,
             const std::string &line_one,
             const std::string &line_two)
@@ -64,9 +64,17 @@ namespace LSGP4
         }
 
         /**
-     * Copy constructor
-     * @param[in] tle Tle object to copy from
-     */
+         * @brief Construct a new Tle object
+         * 
+         * @param[in] norad_id Norad ID of the object
+         * @param[in] url URL to obtain list of TLEs
+         */
+        Tle(const unsigned int norad_id, const char *url);
+
+        /**
+         * Copy constructor
+         * @param[in] tle Tle object to copy from
+         */
         Tle(const Tle &tle)
         {
             name_ = tle.name_;

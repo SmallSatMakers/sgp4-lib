@@ -388,17 +388,44 @@ namespace LSGP4
         }
     }
 
-    void Tle::UpdateFromNetwork(const char *url)
+#ifdef OS_Windows
+#include <windows.h>
+#include <tchar.h>
+#include <atlstr.h>
+#include <urlmon.h>
+
+#pragma comment(lib, "urlmon.lib")
+
+#endif
+
+        void
+        Tle::UpdateFromNetwork(const char *url)
     {
         if (!initd)
         {
             dbprintlf(FATAL "Object not initialized");
             return;
         }
+        FILE *pp = NULL;
+#ifndef OS_Windows
         char cmd[512];
         snprintf(cmd, sizeof(cmd), "wget -q -O- %s", url);
-        FILE *pp = popen(cmd, 
-			"r");
+        pp = popen(cmd,
+                   "r");
+#else // Windows detected, here we get file from internet, save it, and read it back into pp
+        LPCTSTR _url; // URL TCHAR *
+        _tcscpy(_url, A2T(url)); // convert char * to TCHAR *
+        LPCTSTR _tempfile = "webstream.tmp";
+        char *tempfile = "webstream.tmp";
+
+        if (S_OK != URLDownloadToFile(NULL, _url, tempfile, 0, NULL))
+        {
+            dbprintlf("Could not download TLE data");
+            return;
+        }
+
+        pp = fopen(tempfile, "r");
+#endif
         if (pp == NULL)
         {
             dbprintlf(RED_FG "Could not open pipe to obtain TLE data");
@@ -441,6 +468,100 @@ namespace LSGP4
         {
             tprintlf("Update: Object %u not found", NoradNumber());
         }
+        fclose(pp);
+#ifdef OS_Windows
+        // Clean up temp files etc
+        _unlink(tempfile);
+#endif // OS_Windows
+        return;
+    }
+
+    Tle::Tle(const unsigned int norad_id, const char *url)
+    : initd(false)
+    {
+        if (url == NULL || url == nullptr)
+        {
+            throw std::invalid_argument("URL is NULL");
+        }
+        if (norad_id == 0)
+        {
+            throw std::invalid_argument("Invalid NORAD ID");
+        }
+        bool object_found = false;
+        FILE *pp = NULL;
+#ifndef OS_Windows
+        char cmd[512];
+        snprintf(cmd, sizeof(cmd), "wget -q -O- %s", url);
+        pp = popen(cmd,
+                   "r");
+#else // Windows detected, here we get file from internet, save it, and read it back into pp
+        LPCTSTR _url; // URL TCHAR *
+        _tcscpy(_url, A2T(url)); // convert char * to TCHAR *
+        LPCTSTR _tempfile = "webstream.tmp";
+        char *tempfile = "webstream.tmp";
+
+        if (S_OK != URLDownloadToFile(NULL, _url, tempfile, 0, NULL))
+        {
+            dbprintlf("Could not download TLE data");
+            return;
+        }
+
+        pp = fopen(tempfile, "r");
+#endif
+        if (pp == NULL)
+        {
+            dbprintlf(RED_FG "Could not open pipe to obtain TLE data");
+            return;
+        }
+        char search_str1[128];
+        snprintf(search_str1, sizeof(search_str1), "1 %u", norad_id);
+        char search_str2[128];
+        snprintf(search_str2, sizeof(search_str2), "2 %u", norad_id);
+        char l1[128];
+        char l2[128];
+        char buf[128];
+        memset(l1, 0x0, sizeof(l1));
+        memset(l2, 0x0, sizeof(l2));
+        memset(buf, 0x0, sizeof(buf));
+        bool l1_updated = false;
+        bool l2_updated = false;
+        while (fgets(buf, sizeof(buf), pp))
+        {
+            if (strstr(buf, search_str1) != NULL)
+            {
+                strcpy(l1, buf);
+                l1_updated = true;
+            }
+            if (strstr(buf, search_str2) != NULL)
+            {
+                strcpy(l2, buf);
+                l2_updated = true;
+            }
+        }
+        if (l1_updated && l2_updated)
+        {
+            tprintlf("Update: Obtained updated TLE for %u", norad_id);
+            l1[69] = '\0';
+            l2[69] = '\0';
+            object_found = true;
+        }
+        else
+        {
+            tprintlf("Update: Object %u not found", norad_id);
+        }
+#ifdef OS_Windows
+        // Clean up temp files etc
+        fclose(pp);
+        _unlink(tempfile);
+#else
+        pclose(pp);
+#endif // OS_Windows
+        if (object_found)
+        {
+            line_one_ = l1;
+            line_two_ = l2;
+            Initialize();
+        }
     }
 };
 
@@ -449,7 +570,7 @@ std::vector<LSGP4::Tle> ReadTleFromFile(const char *fname)
     int m_obj = 1;
     int n_obj = 0;
 
-    FILE *fp = fopen(fname, "r"); 
+    FILE *fp = fopen(fname, "r");
     if (fp == NULL)
     {
         printf("Error opening TLE file %s, exiting\n", fname);

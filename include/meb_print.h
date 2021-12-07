@@ -17,6 +17,7 @@
 #include <stdio.h>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#define OS_Windows
 #define TERMINATOR
 #ifndef MEB_COLORS
 #define MEB_COLORS
@@ -123,7 +124,7 @@
 
 // Requires time.h.
 #ifdef _TIME_H
-static char *get_time_now()
+static inline char *get_time_now()
 {
     static __thread char buf[128];
     time_t t = time(NULL);
