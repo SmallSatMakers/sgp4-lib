@@ -20,6 +20,7 @@
 #include <errno.h>
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+#define OS_Windows
 #define TERMINATOR
 #ifndef MEB_COLORS
 #define MEB_COLORS
