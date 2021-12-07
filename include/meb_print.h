@@ -198,7 +198,7 @@ static inline char *get_time_now()
 
 #ifndef tprintlf
 #define tprintlf(str, ...) \
-    tprintf(str "\n", ...)
+    tprintf(str "\n", ##__VA_ARGS__)
 #endif // tprintlf
 
 #endif // MEB_PRINT_H
