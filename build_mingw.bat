@@ -14,7 +14,7 @@ SET EDLDFLAGS=-lurlmon
 
 REM This run a command-prompt command to compile using G++.
 
-ECHO Compiling %CPPOBJS% into %TARGET% using %CXX% with %EDCXXFLAGS% flag(s)...
+ECHO Compiling %CPPSRCS% into %TARGET% using %CXX% with %EDCXXFLAGS% flag(s)...
 
 CMD /c "%CXX% %EDCXXFLAGS% examples/passpredict.cpp %CPPSRCS% -o passpredict.exe %EDLDFLAGS%"
 CMD /c "%CXX% %EDCXXFLAGS% examples/runtest.cpp %CPPSRCS% -o runtest.exe %EDLDFLAGS%"

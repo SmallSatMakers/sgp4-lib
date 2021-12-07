@@ -391,7 +391,6 @@ namespace LSGP4
 #ifdef OS_Windows
 #include <windows.h>
 #include <tchar.h>
-#include <atlstr.h>
 #include <urlmon.h>
 
 #pragma comment(lib, "urlmon.lib")
@@ -413,8 +412,8 @@ namespace LSGP4
         pp = popen(cmd,
                    "r");
 #else // Windows detected, here we get file from internet, save it, and read it back into pp
-        LPCTSTR _url; // URL TCHAR *
-        _tcscpy(_url, A2T(url)); // convert char * to TCHAR *
+        TCHAR _url[512]; // URL TCHAR *
+        swprintf(_url, sizeof(_url)/sizeof(_url[0]), L"%hs", url);
         LPCTSTR _tempfile = "webstream.tmp";
         char *tempfile = "webstream.tmp";
 
@@ -496,8 +495,8 @@ namespace LSGP4
                    "r");
 #else // Windows detected, here we get file from internet, save it, and read it back into pp
         LPCTSTR _url; // URL TCHAR *
-        _tcscpy(_url, A2T(url)); // convert char * to TCHAR *
-        LPCTSTR _tempfile = "webstream.tmp";
+        TCHAR _url[512]; // URL TCHAR *
+        swprintf(_url, sizeof(_url)/sizeof(_url[0]), L"%hs", url);
         char *tempfile = "webstream.tmp";
 
         if (S_OK != URLDownloadToFile(NULL, _url, tempfile, 0, NULL))
