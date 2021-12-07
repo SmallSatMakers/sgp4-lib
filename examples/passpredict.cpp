@@ -12,7 +12,9 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#ifndef _MSC_VER
 #include <unistd.h>
+#endif
 #include <errno.h>
 #include <string.h>
 #include "CoordTopocentric.hpp"
@@ -33,8 +35,7 @@ using namespace LSGP4;
 
 #define WEBSTREAM_URL "http://celestrak.com/NORAD/elements/stations.txt"
 
-#if OS_Windows
-
+#ifdef OS_Windows
 #include <windows.h>
 #include <urlmon.h>
 

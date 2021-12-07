@@ -143,7 +143,7 @@
 #endif // bprintf
 
 #ifndef bprintlf
-#define bprintf(str, ...)                       \
+#define bprintlf(str, ...)                       \
     printf(str TERMINATOR "\n", ##__VA_ARGS__);
 #endif // bprintlf
 
@@ -177,7 +177,11 @@
 
 static inline char *get_time_now()
 {
+#ifndef _MSC_VER
     static __thread char buf[128];
+#else
+    __declspec( thread ) static char buf[128];
+#endif
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
     snprintf(buf, sizeof(buf), YELLOW_FG "[" YELLOW_FG "%02d:%02d:%02d" YELLOW_FG "] " TERMINATOR,

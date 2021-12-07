@@ -453,7 +453,6 @@ namespace LSGP4
                 l2_updated = true;
             }
         }
-        pclose(pp);
         if (l1_updated && l2_updated)
         {
             tprintlf("Update: Obtained updated TLE for %u", NoradNumber());
@@ -465,10 +464,12 @@ namespace LSGP4
         {
             tprintlf("Update: Object %u not found", NoradNumber());
         }
-        fclose(pp);
 #ifdef OS_Windows
         // Clean up temp files etc
+        fclose(pp);
         _unlink(tempfile);
+#else
+        pclose(pp);
 #endif // OS_Windows
         return;
     }
