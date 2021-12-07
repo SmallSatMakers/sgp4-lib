@@ -16,7 +16,7 @@ REM This run a command-prompt command to compile using G++.
 
 ECHO Compiling %CPPOBJS% into %TARGET% using %CXX% with %EDCXXFLAGS% flag(s)...
 
-CMD /c "%CXX% %EDCXXFLAGS% example/passpredict.cpp %CPPSRCS% -o passpredict.exe %EDLDFLAGS%"
-CMD /c "%CXX% %EDCXXFLAGS% example/runtest.cpp %CPPSRCS% -o runtest.exe %EDLDFLAGS%"
-CMD /c "%CXX% %EDCXXFLAGS% example/sattrack.cpp %CPPSRCS% -o sattrack.exe %EDLDFLAGS%"
-CMD /c "%CXX% %EDCXXFLAGS% example/obtaintle.cpp %CPPSRCS% -o obtaintle.exe %EDLDFLAGS%"
+CMD /c "%CXX% %EDCXXFLAGS% examples/passpredict.cpp %CPPSRCS% -o passpredict.exe %EDLDFLAGS%"
+CMD /c "%CXX% %EDCXXFLAGS% examples/runtest.cpp %CPPSRCS% -o runtest.exe %EDLDFLAGS%"
+CMD /c "%CXX% %EDCXXFLAGS% examples/sattrack.cpp %CPPSRCS% -o sattrack.exe %EDLDFLAGS%"
+CMD /c "%CXX% %EDCXXFLAGS% examples/obtaintle.cpp %CPPSRCS% -o obtaintle.exe %EDLDFLAGS%"
