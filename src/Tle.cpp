@@ -412,12 +412,9 @@ namespace LSGP4
         pp = popen(cmd,
                    "r");
 #else // Windows detected, here we get file from internet, save it, and read it back into pp
-        TCHAR _url[512]; // URL TCHAR *
-        swprintf_s(_url, sizeof(_url)/sizeof(_url[0]), L"%hs", url);
-        LPCTSTR _tempfile = "webstream.tmp";
         char *tempfile = "webstream.tmp";
 
-        if (S_OK != URLDownloadToFile(NULL, _url, tempfile, 0, NULL))
+        if (S_OK != URLDownloadToFile(NULL, url, tempfile, 0, NULL))
         {
             dbprintlf("Could not download TLE data");
             return;
@@ -494,11 +491,7 @@ namespace LSGP4
         pp = popen(cmd,
                    "r");
 #else // Windows detected, here we get file from internet, save it, and read it back into pp
-        TCHAR _url[512]; // URL TCHAR *
-        swprintf_s(_url, sizeof(_url)/sizeof(_url[0]), L"%hs", url);
-        char *tempfile = "webstream.tmp";
-
-        if (S_OK != URLDownloadToFile(NULL, _url, tempfile, 0, NULL))
+        if (S_OK != URLDownloadToFile(NULL, url, tempfile, 0, NULL))
         {
             dbprintlf("Could not download TLE data");
             return;
