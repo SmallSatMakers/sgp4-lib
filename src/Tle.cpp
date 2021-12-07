@@ -393,7 +393,9 @@ namespace LSGP4
 #include <tchar.h>
 #include <urlmon.h>
 
+#ifndef __MINGW32__
 #pragma comment(lib, "urlmon.lib")
+#endif
 
 #endif
 
@@ -412,8 +414,7 @@ namespace LSGP4
         pp = popen(cmd,
                    "r");
 #else // Windows detected, here we get file from internet, save it, and read it back into pp
-        char *tempfile = "webstream.tmp";
-
+        char tempfile[] = "webstream.tmp";
         if (S_OK != URLDownloadToFile(NULL, url, tempfile, 0, NULL))
         {
             dbprintlf("Could not download TLE data");
@@ -491,7 +492,7 @@ namespace LSGP4
         pp = popen(cmd,
                    "r");
 #else // Windows detected, here we get file from internet, save it, and read it back into pp
-        char *tempfile = "webstream.tmp";
+        char tempfile[] = "webstream.tmp";
         if (S_OK != URLDownloadToFile(NULL, url, tempfile, 0, NULL))
         {
             dbprintlf("Could not download TLE data");
