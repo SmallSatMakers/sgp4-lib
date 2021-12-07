@@ -397,8 +397,8 @@ namespace LSGP4
 
 #endif
 
-        void
-        Tle::UpdateFromNetwork(const char *url)
+    void
+    Tle::UpdateFromNetwork(const char *url)
     {
         if (!initd)
         {
@@ -473,7 +473,7 @@ namespace LSGP4
     }
 
     Tle::Tle(const unsigned int norad_id, const char *url)
-    : initd(false)
+        : initd(false)
     {
         if (url == NULL || url == nullptr)
         {
@@ -491,6 +491,7 @@ namespace LSGP4
         pp = popen(cmd,
                    "r");
 #else // Windows detected, here we get file from internet, save it, and read it back into pp
+        char *tempfile = "webstream.tmp";
         if (S_OK != URLDownloadToFile(NULL, url, tempfile, 0, NULL))
         {
             dbprintlf("Could not download TLE data");
