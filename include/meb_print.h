@@ -205,4 +205,12 @@ static inline char *get_time_now()
     tprintf(str "\n", ##__VA_ARGS__)
 #endif // tprintlf
 
+#ifndef errprintlf
+#define errprintlf(errmsg)                                                                                                        \
+    {                                                                                                                             \
+        fprintf(stderr, "[%s:%d | %s] " RED_FG ">>> %s: %s" MEB_CLR "\n", __FILE__, __LINE__, __func__, errmsg, strerror(errno)); \
+        fflush(stdout);                                                                                                           \
+    }
+#endif
+
 #endif // MEB_PRINT_H
