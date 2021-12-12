@@ -206,10 +206,10 @@ static inline char *get_time_now()
 #endif // tprintlf
 
 #ifndef errprintlf
-#define errprintlf(errmsg)                                                                                                        \
-    {                                                                                                                             \
-        fprintf(stderr, "[%s:%d | %s] " RED_FG ">>> %s: %s" MEB_CLR "\n", __FILE__, __LINE__, __func__, errmsg, strerror(errno)); \
-        fflush(stdout);                                                                                                           \
+#define errprintlf(errmsg)                                                                                                           \
+    {                                                                                                                                \
+        fprintf(stderr, "[%s:%d | %s] " RED_FG ">>> %s: %s" TERMINATOR "\n", __FILE__, __LINE__, __func__, errmsg, strerror(errno)); \
+        fflush(stdout);                                                                                                              \
     }
 #endif
 
